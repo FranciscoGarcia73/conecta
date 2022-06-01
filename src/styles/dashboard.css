@@ -21,5 +21,6 @@ header {
 }
 
 .selector {
-  height: 50px;
+  height: 36px;
+  background-color: white;
 }
