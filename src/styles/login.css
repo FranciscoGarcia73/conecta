@@ -1,0 +1,110 @@
+.container-login {
+  margin-top: 40px;
+  border: 1px solid rgb(172, 26, 47);
+  border-radius: 12px;
+  width: 550px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
+
+.logo {
+  margin-top: 150px;
+}
+
+.login {
+  width: 400px;
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: space-around;
+}
+
+p.error {
+  color: red;
+  font-size: 20px;
+}
+
+span,
+input {
+  font: 16px/16px Verdana;
+  padding: 0;
+}
+/*reposo*/
+label {
+  display: block;
+  width: 400px;
+  border: 2px solid silver;
+  padding: 8px 10px;
+  position: relative;
+  box-sizing: border-box;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+label .input {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+label span {
+  color: silver;
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  transition: 0.3s;
+}
+
+/*focus*/
+label.focus {
+  border-color: rgb(172, 26, 47);
+  width: 400px;
+}
+label span.focus {
+  color: rgb(172, 26, 47);
+}
+/*top*/
+label span.top {
+  left: 2px;
+  top: -10px;
+  font-size: 12px;
+  background-color: white;
+  padding: 0 5px;
+}
+
+.button {
+  background-color: rgb(172, 26, 47);
+  width: 400px;
+  border: 2px solid silver;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  color: white;
+  font-weight: bold;
+}
+
+.buttonLogin {
+  width: 400px;
+  border: 2px solid green;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: lightseagreen;
+  color: black;
+}
+.none {
+  text-decoration: none;
+}
+.error {
+  color: black;
+}
