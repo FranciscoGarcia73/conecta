@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import axios from "axios";
 
@@ -12,7 +12,7 @@ export const GetRequisitosPendientes = (
   const fetchData = async () => {
     try {
       const result = await axios.get(
-        `https://dev.gescae.online/api/requisito/pendientes`,
+        `https://dev.gescae.online/api/evidencia/pendientes-verificar`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

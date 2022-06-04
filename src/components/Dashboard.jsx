@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { ModalPdf } from "./ModalPdf";
+
 import "../styles/dashboard.css";
+
+//import requisitosDatos from "../data/requisitosDatos.js";
 
 import { GetRequisitosPendientes } from "../selectors/GetRequisitosPendientes";
 
@@ -11,6 +16,7 @@ export const Dashboard = ({ token }) => {
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [searchSelectText, setSearchSelectText] = useState("default");
+  const [modalShow, setModalShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,7 +28,9 @@ export const Dashboard = ({ token }) => {
     setRequisitosValidarFilter(
       requisitosValidar.filter(
         (requisito) =>
-          requisito.nombre.toLowerCase().includes(searchText.toLowerCase()) ||
+          requisito.nombreSujeto
+            .toLowerCase()
+            .includes(searchText.toLowerCase()) ||
           requisito.requisito.toLowerCase().includes(searchText.toLowerCase())
       )
     );
@@ -35,7 +43,7 @@ export const Dashboard = ({ token }) => {
       } else {
         setRequisitosValidarFilter(
           requisitosValidar.filter((requisito) =>
-            requisito.origen
+            requisito.sujeto
               .toLowerCase()
               .includes(searchSelectText.toLowerCase())
           )
@@ -57,19 +65,19 @@ export const Dashboard = ({ token }) => {
   return (
     <>
       {loading && <div>Cargando...</div>}
-      {error && <div>{error}</div>}
+      {error && <div>{error.message}</div>}
       {requisitosValidar && (
         <div>
           <div className="dashboard">
             <header>
-              <button className="btn btn-secondary m-3" onClick={handleLogout}>
+              <button className="btn btn-light m-3" onClick={handleLogout}>
                 Logout
               </button>
             </header>
             <div className="container">
-              <h1>Requisitos por Validar</h1>
+              <h1 className="mt-3">Requisitos por Validar</h1>
               <hr />
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between mb-5">
                 <select
                   defaultValue={"default"}
                   className="mt-1 rounded selector"
@@ -77,9 +85,9 @@ export const Dashboard = ({ token }) => {
                   value={searchSelectText}
                   onChange={(e) => setSearchSelectText(e.target.value)}
                 >
-                  <option value="default">Selecciona Origen</option>
+                  <option value="default">Selecciona Sujeto</option>
                   <option value="servicio">Servicio</option>
-                  <option value="proveedor">Proveedor</option>
+                  <option value="documentacion">Documentacion</option>
                   <option value="trabajador">Trabajador</option>
                 </select>
                 <div className="searchTextArea d-flex justify-content-end w-75">
@@ -108,6 +116,9 @@ export const Dashboard = ({ token }) => {
                   </button>
                 </div>
               </div>
+              <div className="total border border-light bg-info rounded d-inline p-2">
+                Total: {requisitosValidarFilter.length}
+              </div>
               <div className="table-container">
                 <table className="table table-hover mt-5">
                   <thead>
@@ -115,26 +126,39 @@ export const Dashboard = ({ token }) => {
                       <th scope="col"></th>
                       <th scope="col">Nombre</th>
                       <th scope="col">Requisito</th>
-                      <th scope="col">Origen</th>
+                      <th scope="col">Sujeto</th>
                       <th scope="col" className="text-center">
                         Fecha de Subida
+                      </th>
+                      <th scope="col" className="text-center">
+                        Estado
                       </th>
                     </tr>
                   </thead>
                   <tbody>
                     {requisitosValidarFilter.map((requisito) => {
                       return (
-                        <tr key={requisito.idRequisitoCae}>
+                        <tr key={requisito.idEvidenciaRequisito}>
                           <th scope="row">
-                            <button className="btn btn-success">Ver</button>
+                            <button
+                              className="btn btn-success"
+                              onClick={() => setModalShow(true)}
+                            >
+                              Ver
+                            </button>
                           </th>
-                          <td className="align-middle">{requisito.nombre}</td>
+                          <td className="align-middle">
+                            {requisito.nombreSujeto}
+                          </td>
                           <td className="align-middle">
                             {requisito.requisito}
                           </td>
-                          <td className="align-middle">{requisito.origen}</td>
+                          <td className="align-middle">{requisito.sujeto}</td>
                           <td className="align-middle text-center">
-                            {requisito.fechaSubida}
+                            {requisito.timeStamp}
+                          </td>
+                          <td className="align-middle text-center">
+                            {requisito.estadoRequisito}
                           </td>
                         </tr>
                       );
@@ -146,6 +170,7 @@ export const Dashboard = ({ token }) => {
           </div>
         </div>
       )}
+      <ModalPdf show={modalShow} onHide={() => setModalShow(false)} />
     </>
   );
 };

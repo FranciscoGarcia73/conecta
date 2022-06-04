@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import axios from "axios";
 
 import "../styles/login.css";
+import logo from "../img/logo_conecta.png";
 
 export const Login = ({ setToken }) => {
   const [onBlurUsername, setOnBlurUsername] = useState(false);
@@ -48,8 +49,8 @@ export const Login = ({ setToken }) => {
     >
       {(formik) => (
         <div className="d-flex flex-column align-items-center justify-content-evenly">
-          <div className="d-flex logo justify-content-center">
-            <h1>Logo Conecta</h1>
+          <div className="logo">
+            <img src={logo} alt="Logo Conecta" />
           </div>
           <div className="container-login">
             <Form className="login">
